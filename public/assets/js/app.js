@@ -150,7 +150,7 @@ async function editStudent(student_id, current_page) {
         var currentValue = td.innerText.trim();
 
         var button1 = document.createElement('button');
-        button1.setAttribute('class', 'btn btn-outline-info m-2');
+        button1.setAttribute('class', 'btn btn-outline-secondary m-2');
         button1.setAttribute('onclick', 'updateStudent(' + student_id + ',' + current_page + ')');
         button1.setAttribute('type', 'button');
         button1.innerText = 'Update';

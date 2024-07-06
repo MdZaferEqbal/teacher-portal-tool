@@ -8,7 +8,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
         @if(Auth::check())
           <form class="d-flex grid gap-2" role="search">
-            <a href="{{url('/students')}}" class="btn {{ request()->is('students*') ? 'btn-info' : 'btn-outline-info' }}">Students</a>
+            <a href="{{url('/students')}}" class="btn {{ request()->is('students*') ? 'btn-secondary' : 'btn-outline-secondary' }}">Students</a>
             <a href="{{url('/log-out')}}" class="btn btn-danger">Log Out</a>
           </form>
         @else

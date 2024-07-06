@@ -3,7 +3,7 @@
     <title>Teacher-Portal | Students</title>
 @endpush
 @section('main-section')
-    <div class="container ">
+    <div class="container">
         <form action="{{route('students.view')}}" method="GET" class="d-flex mt-2" role="search">
             <select class="form-select bg-danger border-0 rounded-0" style="width: 122px;" aria-label="Default select example" name="search_by" value={{old('search_by')}}>
                 <option disabled selected value={{null}}>Search by</option>
@@ -36,7 +36,7 @@
                             <td>{{$student->subject}}</td>
                             <td>{{$student->marks}}</td>
                             <td>
-                                <button onclick="editStudent({{$student->id}}, {{$students->currentPage()}})" type="button" class="btn btn-outline-info m-2">Edit</button>
+                                <button onclick="editStudent({{$student->id}}, {{$students->currentPage()}})" type="button" class="btn btn-outline-secondary m-2">Edit</button>
                                 <button onclick="deleteStudent({{$student->id}}, {{$students->currentPage()}})" type="button" class="btn btn-outline-danger delete-student-btn-{{$student->id}}" style="min-width: 16.5vh;">Delete</button>
                                 <button class="btn btn-danger custom-loader-{{$student->id}} d-none" type="button" disabled>
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -46,10 +46,11 @@
                         </tr>
                     @endforeach
                 @else
-                    <tr><td colspan="4" class="text-center text-danger"><h4>Oops! No Data Found
+                    <tr><td colspan="4" class="text-center text-danger"><h4>Oops! No Data Found</h4>
                     @if ($searched)
-                        </h4>We couldn’t find anything matching your search criteria. Try a different search?</td></tr>
+                        We couldn’t find anything matching your search criteria. Try a different search?
                     @endif
+                    </td></tr>
                 @endif
                 @if($students->lastPage() > 1)
                     <tr>

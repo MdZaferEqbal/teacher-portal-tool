@@ -36,42 +36,39 @@ Upon logging into the Teacher Portal, you will be redirected to the Student Mana
     cp .env.example .env
     ```
 
-2. **Generate the application key:**
-    ```sh
-    php artisan key:generate
-    ```
-
-3. **Set up your database:**
+2. **Set up your database:**
     Open the `.env` file and configure your database settings. For example:
     ```env
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=teacher-portal-tool
-    DB_USERNAME=root
-    DB_PASSWORD=
+    DB_DATABASE=your_db_name
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
     ```
 
-4. **Run the database migrations:**
+3. **Run the database migrations:**
     ```sh
     php artisan migrate
     ```
 
-5. **(Optional) Seed the database with sample data:**
+4. **(Optional) Seed the database with sample data:**
     ```sh
     php artisan db:seed
     ```
 
 ## Running the Application
 
-1. **Compile the assets:**
-    ```sh
-    npm run dev
-    ```
-
-2. **Start the local development server:**
+1. **Start the local development server:**
     ```sh
     php artisan serve
     ```
 
-    By default, the application will be accessible at [http://localhost:8000](http://localhost:
+    By default, the application will be accessible at [http://localhost:8000](http://localhost:8000).
+
+## Features
+
+- **Student Management Dashboard:** View all students, their names, subjects, and marks.
+- **Edit Student Details:** Easily update student information.
+- **Remove Student Records:** Delete student records when necessary.
+- **Intuitive Interface:** Navigate through the student list efficiently.

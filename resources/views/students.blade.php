@@ -7,12 +7,12 @@
         <form action="{{route('students.view')}}" method="GET" class="d-flex mt-2" role="search">
             <select class="form-select bg-danger border-0 rounded-0" style="width: 122px;" aria-label="Default select example" name="search_by" value={{old('search_by')}}>
                 <option disabled selected value={{null}}>Search by</option>
-                <option value="id">Student Id</option>
-                <option value="name">Student Name</option>
-                <option value="subject">Student Subject</option>
+                <option value="id">Id</option>
+                <option value="name">Name</option>
+                <option value="subject">Subject</option>
                 <option value="marks">Marks</option>
             </select>
-            <input class="form-control rounded-0 btn btn-secondary border-0" type="search" placeholder="Search" aria-label="Search" name="search_input" value={{old('search_input')}}>
+            <input class="form-control rounded-0 btn btn-secondary text-dark border-0" type="search" placeholder="Search" aria-label="Search" name="search_input" value={{old('search_input')}}>
             @if ($searched)
                 <a href="{{route('students.view')}}" class="btn btn-danger rounded-0 text-dark" style="width: 122px;" type="submit">Reset</a>
             @else
@@ -68,4 +68,5 @@
         @include('add-student-modal')
         <button type="button" onclick="showAddStudentModal()" class="btn btn-dark rounded-0 mb-3">Add</button>
     </div>
+    @include('modals.pop-up-modal')
 @endsection

@@ -18,11 +18,13 @@ class CustomInput extends Component
     public $type;
     public $required;
     public $apiAddStudent;
+    public $min; 
+    public $max;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($label = null, $id = null, $name = null, $placeholder = null, $value = null, $icon = null, $type = null, $required = FALSE, $apiAddStudent = FALSE)
+    public function __construct($label = null, $id = null, $name = null, $placeholder = null, $value = null, $icon = null, $type = null, $required = FALSE, $apiAddStudent = FALSE, $min = "0", $max = "0")
     {
         if(isset($label)) {
             $this->label = $label;
@@ -44,6 +46,12 @@ class CustomInput extends Component
         }
         if(isset($type)) {
             $this->type = $type;
+        }
+        if($min) {
+            $this->min = $min;
+        }
+        if($max) {
+            $this->max = $max;
         }
         if($required) {
             $this->required = TRUE;

@@ -1,9 +1,12 @@
+@php
+    http_response_code(401);
+@endphp
 @extends('layouts.main')
 @push('title')
-    <title>Teacher-Portal | Unauthroized</title>
+    <title>Unauthroized</title>
 @endpush
 @section('main-section')
-    <div class="container">
-        <h1 class="text-center text-danger mt-2">Unauthroized: <a class="text-info" href="{{url('/login')}}">LogIn</a> or <a class="text-info" href="{{url('/signUp')}}">SignUp</a> to access this page.</h1>
+    <div class="container text-center">
+        <h1 class="text-danger mt-2">401 Unauthroized: <a class="text-secondary" href="{{url('/login')}}">Log In</a> or <a class="text-secondary" href="{{url('/signUp')}}">Sign Up</a> to access this page.</h1>
     </div>
 @endsection

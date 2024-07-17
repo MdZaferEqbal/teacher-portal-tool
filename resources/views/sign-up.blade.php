@@ -9,9 +9,9 @@
             <form action="{{route('signup')}}" method="POST">
                 @csrf
                 <x-custom-input label="Name" id="ttp-name" name="name" placeholder="Name" value="{{old('name')}}" icon='<i class="fa-solid fa-user"></i>' type="text" required="TRUE"/>
-                <x-custom-input label="Email" id="ttp-email" name="email" placeholder="email" value="{{old('email')}}" icon='<i class="fa-solid fa-envelope"></i>' type="email" required="TRUE"/>
-                <x-custom-input label="Password" id="ttp-password" name="password" value="{{old('password')}}" icon='<i class="fa-solid fa-lock"></i>' type="password" required="TRUE"/>
-                <button class="btn btn-dark w-100 sign-up-btn" type="submit">Sign Up</button>
+                <x-custom-input label="Email" id="ttp-email" name="email" placeholder="Email" value="{{old('email')}}" icon='<i class="fa-solid fa-at"></i>' type="email" required="TRUE"/>
+                <x-custom-input label="Password" id="ttp-password" name="password" placeholder="Password" value="{{old('password')}}" icon='<i class="fa-solid fa-lock"></i>' type="password" required="TRUE"/>
+                <button class="btn btn-dark w-100 sign-up-btn rounded-0" type="submit">Sign Up</button>
                 @session('error')
                     <div class="text-danger mt-2">
                         {!!session('error')!!}

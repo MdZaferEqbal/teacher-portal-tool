@@ -120,4 +120,8 @@ class AppController extends Controller
 
         return view('students')->with($data);
     }
+
+    public function profileView() {
+        return view('user.profile');
+    }
 }

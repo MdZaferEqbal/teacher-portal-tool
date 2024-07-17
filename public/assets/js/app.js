@@ -117,19 +117,24 @@ async function showConfirmModal(body = "Are you sure you want to proceed?") {
     $('#customModal').modal('show')
     document.getElementById('customModalTitle').innerHTML = "Confirmation!"
     document.getElementById('customModalBody').innerHTML = body
+    document.getElementById('customModalFooter').innerHTML = '';
+    document.getElementById('customModalFooter').classList.remove('d-none')
 
     return new Promise((confirm) => {
         var button1 = document.createElement('button');
-        button1.setAttribute('class', 'btn btn-outline-danger m-2');
+        button1.setAttribute('class', 'btn rounded-0 btn-outline-secondary m-2');
         button1.setAttribute('value', '1');
         button1.setAttribute('type', 'button');
         button1.innerText = 'Yes';
 
         var button2 = document.createElement('button');
-        button2.setAttribute('class', 'btn btn-outline-success');
+        button2.setAttribute('class', 'btn rounded-0 btn-outline-danger');
         button2.setAttribute('type', 'button');
         button2.setAttribute('value', '0');
         button2.innerText = 'No';
+
+        document.getElementById('customModalFooter').appendChild(button1);
+        document.getElementById('customModalFooter').appendChild(button2);
 
         button1.addEventListener('click', function() {
             hideModal()
@@ -140,10 +145,6 @@ async function showConfirmModal(body = "Are you sure you want to proceed?") {
             hideModal()
             confirm(0);
         });
-
-        document.getElementById('customModalFooter').innerHTML = '';
-        document.getElementById('customModalFooter').appendChild(button1);
-        document.getElementById('customModalFooter').appendChild(button2);
     });
 }
 
@@ -222,13 +223,14 @@ async function editStudent(student_id, current_page) {
         var th = row.getElementsByTagName('th');
 
         var currentValue = th[0].innerText;
+        let name = currentValue.split(" - ")[1];
 
         var input = document.createElement('input');
         input.setAttribute('class', 'form-control');
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'name');
         input.setAttribute('id', 'ttd-student-name');
-        input.setAttribute('value', currentValue);
+        input.setAttribute('value', name);
 
         th[0].innerHTML = '';
         th[0].appendChild(input);
@@ -259,13 +261,13 @@ async function editStudent(student_id, current_page) {
         var currentValue = td.innerText;
 
         var button1 = document.createElement('button');
-        button1.setAttribute('class', 'btn btn-outline-secondary m-2');
+        button1.setAttribute('class', 'btn rounded-0 btn-outline-secondary m-2');
         button1.setAttribute('onclick', 'updateStudent(' + student_id + ',' + current_page + ')');
         button1.setAttribute('type', 'button');
         button1.innerText = 'Update';
 
         var button2 = document.createElement('button');
-        button2.setAttribute('class', 'btn btn-outline-danger');
+        button2.setAttribute('class', 'btn rounded-0 btn-outline-danger');
         button2.setAttribute('type', 'button');
         button2.setAttribute('onclick', 'cancelEdit()');
         button2.innerText = 'Cancel';
@@ -309,6 +311,103 @@ async function updateStudent(student_id, current_page) {
                 error: function(error) {
                     console.error(error);
                     showModal(title = 'Failed', body = JSON.parse(error.responseText).message)
+                }
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            showModal(title = 'Error', body = "An error occurred. Please try again later.")
+        }
+    });
+}
+
+async function updateUser() {
+    showConfirmModal("Are you sure you want to update user data?").then((result) => {
+        if(! result ) {
+            return;
+        }
+        try {
+            if(document.getElementById('error-message-name')){
+                document.getElementById('error-message-name').remove()
+            }
+            if(document.getElementById('error-message-current_password')) {
+                document.getElementById('error-message-current_password').remove()
+            }
+            if(document.getElementById('error-message-new_password')) {
+                document.getElementById('error-message-new_password').remove()
+            }
+
+            $.ajax({
+                url: window.location.origin + '/api/update-user',
+                type: 'POST',
+                data: {
+                    name: document.getElementById('ttp-name').value,
+                    email: document.getElementById('ttp-email').value,
+                    current_password: document.getElementById('ttp-current-password').value,
+                    new_password: document.getElementById('ttp-new-password').value,
+                },
+                success: function(response) {
+                    if (response.status == 1) {
+                        showModal(title = 'Updated', body = response.message, footer = "", close = 0)
+                        setTimeout(function() {
+                            hideModal()
+                            window.location.href = '/profile';
+                        }, 3000)
+                    } else {
+                        if(response.message == "Validation Failed.") {
+                            for (let key in response.errors) {
+                                if (response.errors.hasOwnProperty(key)) {
+                                    const errorElement = document.createElement('span')
+                                    errorElement.setAttribute('class', 'text-danger')
+                                    var error_span_id = 'error-message-' + key
+                                    errorElement.setAttribute('id', error_span_id)
+                                    errorElement.innerHTML = response.errors[key][0]
+                                    document.getElementById('ttp-label-' + key).insertAdjacentElement('afterend', errorElement)
+                                }
+                            }
+                            setTimeout(function() {
+                                if(document.getElementById('error-message-name')){
+                                    document.getElementById('error-message-name').remove()
+                                }
+                                if(document.getElementById('error-message-current_password')) {
+                                    document.getElementById('error-message-current_password').remove()
+                                }
+                                if(document.getElementById('error-message-new_password')) {
+                                    document.getElementById('error-message-new_password').remove()
+                                }
+                            }, 5000);
+                        } else {
+                            showModal(title = 'Failed', body = response.message)
+                        }
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                    const response = JSON.parse(error.responseText)
+                    if(response.message == "Validation Failed.") {
+                        for (let key in response.errors) {
+                            if (response.errors.hasOwnProperty(key)) {
+                                const errorElement = document.createElement('span')
+                                errorElement.setAttribute('class', 'text-danger')
+                                var error_span_id = 'error-message-' + key
+                                errorElement.setAttribute('id', error_span_id)
+                                errorElement.innerHTML = response.errors[key][0]
+                                document.getElementById('ttp-label-' + key).insertAdjacentElement('afterend', errorElement)
+                            }
+                        }
+                        setTimeout(function() {
+                            if(document.getElementById('error-message-name')){
+                                document.getElementById('error-message-name').remove()
+                            }
+                            if(document.getElementById('error-message-current_password')) {
+                                document.getElementById('error-message-current_password').remove()
+                            }
+                            if(document.getElementById('error-message-new_password')) {
+                                document.getElementById('error-message-new_password').remove()
+                            }
+                        }, 5000);
+                    } else {
+                        showModal(title = 'Failed', body = JSON.parse(error.responseText).message)
+                    }
                 }
             });
         } catch (error) {

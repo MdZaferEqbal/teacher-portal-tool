@@ -13,10 +13,13 @@ class CustomInput extends Component
     public $id;
     public $name;
     public $placeholder;
+    public $info;
+    public $labelInfo;
     public $value;
     public $icon;
     public $type;
     public $required;
+    public $disabled;
     public $apiAddStudent;
     public $min; 
     public $max;
@@ -24,7 +27,7 @@ class CustomInput extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($label = null, $id = null, $name = null, $placeholder = null, $value = null, $icon = null, $type = null, $required = FALSE, $apiAddStudent = FALSE, $min = "0", $max = "0")
+    public function __construct($label = null, $id = null, $name = null, $placeholder = null, $info = null, $labelInfo = null, $value = null, $icon = null, $type = null, $required = FALSE, $disabled = FALSE, $apiAddStudent = FALSE, $min = "0", $max = "0")
     {
         if(isset($label)) {
             $this->label = $label;
@@ -37,6 +40,12 @@ class CustomInput extends Component
         }
         if(isset($placeholder)) {
             $this->placeholder = $placeholder;
+        }
+        if(isset($info)) {
+            $this->info = $info;
+        }
+        if(isset($labelInfo)) {
+            $this->labelInfo = $labelInfo;
         }
         if(isset($value)) {
             $this->value = $value;
@@ -55,6 +64,9 @@ class CustomInput extends Component
         }
         if($required) {
             $this->required = TRUE;
+        }
+        if($disabled) {
+            $this->disabled = TRUE;
         }
         if($apiAddStudent) {
             $this->apiAddStudent = TRUE;

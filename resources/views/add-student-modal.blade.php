@@ -12,8 +12,8 @@
                     <x-custom-input label="Student Name" id="ttp-name" name="name" placeholder="Student Name" value="{{old('name')}}" icon='<i class="fa-solid fa-signature"></i>' type="text" required="TRUE" />
                     <x-custom-input label="Subject" id="ttp-subject" name="subject" placeholder="Subject" value="{{old('subject')}}" icon='<i class="fa-solid fa-s"></i>' type="text" required="TRUE" />
                     <x-custom-input label="Marks" id="ttp-marks" name="marks" value="{{old('marks')}}" icon='<i class="fa-solid fa-star-half-stroke"></i>' placeholder="100" type="number" min="0" max="100" required="TRUE" />
-                    <button class="btn btn-dark w-100 add-student-btn" onclick="addStudent()" type="button">Add</button>
-                    <button class="btn btn-dark custom-loader w-100 d-none" type="button" disabled>
+                    <button class="btn rounded-0 btn-dark w-100 add-student-btn" onclick="addStudent()" type="button">Add</button>
+                    <button class="btn rounded-0 btn-dark custom-loader w-100 d-none" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                         <span role="status">Adding...</span>
                     </button>

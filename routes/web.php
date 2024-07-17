@@ -20,4 +20,6 @@ Route::match(['get', 'post'], '/signUp', [AppController::class, 'signUp'])->name
 
 Route::get('/log-out', [AppController::class, 'logout'])->name('logout');
 
+Route::get('/profile', [AppController::class, 'profileView'])->name('profile.view')->middleware(EnsureUserLoggedIn::class);
+
 Route::get('/students', [AppController::class, 'studentsView'])->name('students.view')->middleware(EnsureUserLoggedIn::class);

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AppController;
 use Illuminate\Support\Facades\Validator;
 
 class AppApiController extends Controller
@@ -90,6 +91,63 @@ class AppApiController extends Controller
             }
         }
         return response()->json($response,$responseCode);
+    }
+
+    public function updateUser(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'name'             => 'required',
+            'email'            => 'required|email',
+            'current_password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'message' => 'Validation Failed.',
+                'errors'  => $validator->errors(),
+                'status'  => 0
+            ];
+            $responseCode = 422;
+        } else {
+            try{
+                $auth_creds = [
+                    'email'    => $req['email'],
+                    'password' => $req['current_password']
+                ];
+                
+                if(Auth::attempt($auth_creds)) {
+                    $user = User::find(Auth::user()->id);
+
+                    $user->name     = $req['name'];
+                    if(! empty($req['new_password'])) {
+                        $user->password = Hash::make($req['new_password']);
+                        $response = [
+                            'message' => 'User Name & Password Updated successfully.',
+                            'status'  => 1
+                        ];
+                        $responseCode = 200;
+                    } else {
+                        $response = [
+                            'message' => 'User Name Updated successfully.',
+                            'status'  => 1
+                        ];
+                        $responseCode = 200;
+                    }
+                    $user->save();
+                } else {
+                    $response = [
+                        'message' => 'Email & Current Password Missmatch.',
+                        'status'  => 0
+                    ];
+                    $responseCode = 422;
+                }
+            } catch(\Exception $error) {
+                $response = [
+                    'message' => $error->getMessage(),
+                    'status'  => 0
+                ];
+                $responseCode = 500;
+            }
+        }
+        return response()->json($response, $responseCode); 
     }
 
     public function updateStudent(Request $req) {

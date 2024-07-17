@@ -17,7 +17,9 @@ use App\Http\Controllers\Api\AppApiController;
 |
 */
 
-Route::post('/add-student', [AppApiController::class, 'addStudent']);
+Route::post('/update-user', [AppApiController::class, 'updateUser'])->name('update.user');
+
+Route::post('/add-student', [AppApiController::class, 'addStudent'])->name('add.student');
 
 Route::get('/update-student', [AppApiController::class, 'updateStudent'])->name('update.student');
 
